@@ -47,3 +47,9 @@ _Notas: memória usada leva em conta todo o processo do java_
 - Remoção com inserção de 20000 elementos aleatórios:
 
         Tempo elapsado: 1ms
+
+- 50000 elementos aleatórios:
+
+        Inserção demorou 8 ms
+        Busca demorou 0 ms
+        Remoção demorou 0 ms
