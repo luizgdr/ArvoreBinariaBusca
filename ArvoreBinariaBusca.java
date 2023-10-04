@@ -159,18 +159,34 @@ public class ArvoreBinariaBusca {
     // Remover o maior elemento de uma árvore binária de busca
     // Remover o menor elemento de uma árvore binária de busca
     // Remover o elemento de valor N de uma árvore binária de busca
-    private Node arvore;
+    private Node raiz;
     public ArvoreBinariaBusca() {
-        arvore = null;
+        raiz = null;
+    }
+
+    public Node buscar(int valor) {
+        Node atual = this.raiz;
+        while (atual != null && atual.getValor() != valor) {
+            if (atual.getValor() > valor)
+                atual = atual.getEsquerda();
+            else
+                atual = atual.getDireita();
+        }
+        return atual;
+        /*
+        if (atual != null && atual.getValor() == valor) {
+            return atual;
+        }
+        return null; */
     }
 
     public void inserir(int valor) {
-        if (arvore == null) {
-            arvore = new Node(valor);
+        if (raiz == null) {
+            raiz = new Node(valor);
             return;
         }
 
-        Node atual = arvore;
+        Node atual = raiz;
         while (atual != null) {
             // ir para direita
             if (atual.getValor() <= valor) {
@@ -193,23 +209,23 @@ public class ArvoreBinariaBusca {
     }
 
     public void imprimir() {
-        arvore.imprimir();
+        raiz.imprimir();
     }
 
     public void imprimir_preordem() {
-        arvore.imprimir_preordem();
+        raiz.imprimir_preordem();
     }
 
     public void imprimir_inordem() {
-        arvore.imprimir_inordem();
+        raiz.imprimir_inordem();
     }
 
     public void imprimir_posordem() {
-        arvore.imprimir_posordem();
+        raiz.imprimir_posordem();
     }
 
     public void remover_maior() {
-        Node anterior, atual = arvore;
+        Node anterior, atual = raiz;
         while (true) {
             anterior = atual;
             atual = atual.getDireita();
@@ -222,7 +238,7 @@ public class ArvoreBinariaBusca {
     }
 
     public void remover_menor() {
-        Node anterior, atual = arvore;
+        Node anterior, atual = raiz;
         while (true) {
             anterior = atual;
             atual = atual.getEsquerda();
@@ -235,7 +251,7 @@ public class ArvoreBinariaBusca {
     }
 
     public void remover(int n) {
-        Node ret = arvore.pop(n, arvore);
+        Node ret = raiz.pop(n, raiz);
         if (ret == null) return;
         System.out.println("Removendo " + ret + "\n");
     }
@@ -243,13 +259,30 @@ public class ArvoreBinariaBusca {
     public static void main(String args[]) {
         Random rand = new Random();
         ArvoreBinariaBusca arvore = new ArvoreBinariaBusca();
-        int num;
+        int num, ultimoAleatorio = 0;
         if (args.length == 1)
             num = Integer.parseInt(args[0]);
         else
             return;
+        System.out.println("Gerando " + num + " números aleatórios");
+        long inicio = System.currentTimeMillis();
         for (int i = 0; i < num; i++) {
-            arvore.inserir(rand.nextInt(50000));
+            ultimoAleatorio = rand.nextInt(50000);
+            arvore.inserir(ultimoAleatorio);
         }
+        long fim = System.currentTimeMillis();
+        System.out.println("Inserção demorou " + (fim - inicio) + " ms");
+
+        System.out.println("Buscando o último número inserido: " + ultimoAleatorio);
+        inicio = System.currentTimeMillis();
+        arvore.buscar(ultimoAleatorio);
+        fim = System.currentTimeMillis();
+        System.out.println("Busca demorou " + (fim - inicio) + " ms");
+
+        System.out.println("Removendo o último número inserido: " + ultimoAleatorio);
+        inicio = System.currentTimeMillis();
+        arvore.remover(ultimoAleatorio);
+        fim = System.currentTimeMillis();
+        System.out.println("Remoção demorou " + (fim - inicio) + " ms");
     }
 }
