@@ -1,3 +1,5 @@
+import java.util.Random;
+
 class Node {
     private int valor;
     private Node esquerda, direita;
@@ -44,18 +46,18 @@ class Node {
                     }
                     // tirar referências do nó filho antes de substituir pelo
                     // ret
-                    if (anterior.getEsquerda() == this) {
+                    if (anterior.getEsquerda() == maior) {
                         anterior.setEsquerda(null);
                     } else {
                         anterior.setDireita(null);
                     }
-                    if (pai.getEsquerda() != this) {
+                    if (pai.getEsquerda() == this) {
                         pai.setEsquerda(maior);
                     } else {
                         pai.setDireita(maior);
                     }
-                    maior.setEsquerda(this.esquerda);
-                    maior.setDireita(this.direita);
+                    maior.setEsquerda(this.getEsquerda());
+                    maior.setDireita(this.getDireita());
                 }
             }
             return this;
@@ -238,60 +240,16 @@ public class ArvoreBinariaBusca {
         System.out.println("Removendo " + ret + "\n");
     }
 
-/*                 14
- *                /  \
- *               04  15
- *              /  \ 
- *             03  09
- *                /  \
- *               07  09
- *              /
- *             05
- *            /  \
- *           04  05
- *  
- *  
- *  
- *  
- *  
- *  
- *  
- *  
- *  
- *  
- *  
- *  
- * */
     public static void main(String args[]) {
+        Random rand = new Random();
         ArvoreBinariaBusca arvore = new ArvoreBinariaBusca();
-        arvore.inserir(14); //                14
-        arvore.inserir(15); //     /   04                    15
-        arvore.inserir(4);  //   03          09           14     18
-        arvore.inserir(9);  //          07        09           16  20
-        arvore.inserir(7);  //      05                          17
-        arvore.inserir(18); //   04    05
-        arvore.inserir(3);  //
-        arvore.inserir(5);  //
-        arvore.inserir(16); //
-        arvore.inserir(4);  //
-        arvore.inserir(20); //
-        arvore.inserir(17); //
-        arvore.inserir(9);  //
-        arvore.inserir(14); //
-        arvore.inserir(5);  //
-        System.out.println("Pré-ordem\n");
-        arvore.imprimir_preordem();
-        System.out.println("In-ordem\n");
-        arvore.imprimir_inordem();
-        System.out.println("Pós-ordem\n");
-        arvore.imprimir_posordem();
-        System.out.println("Removendo maior\n");
-        arvore.remover_maior();
-        arvore.imprimir_preordem();
-        System.out.println("Removendo menor\n");
-        arvore.remover_menor();
-        arvore.imprimir_preordem();
-        arvore.remover(7);
-        arvore.imprimir_preordem();
+        int num;
+        if (args.length == 1)
+            num = Integer.parseInt(args[0]);
+        else
+            return;
+        for (int i = 0; i < num; i++) {
+            arvore.inserir(rand.nextInt(50000));
+        }
     }
 }
